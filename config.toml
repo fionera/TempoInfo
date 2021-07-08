@@ -1,4 +1,4 @@
 username = "AzureDiamond"
 password = "hunter2"
 url = "https://jira.example.com"
-numberOfPeriods = 48
+numberOfPeriods = "48"
