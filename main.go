@@ -20,7 +20,7 @@ type Config struct {
 	NumberOfPeriods string `toml:"numberOfPeriods"`
 }
 
-var re = regexp.MustCompile(`(?m)name="ajs-tempo-user-key" content="(\w+)"`)
+var re = regexp.MustCompile(`(?m)name="ajs-tempo-user-key" content="([\w\.]+)"`)
 
 func main() {
 	var config Config
@@ -57,6 +57,11 @@ func main() {
 		userID = match[1]
 		break
 	}
+
+        if userID == "" {
+		log.Println("Empty UserID. Exiting")
+		return
+        }
 
 	log.Println("Fetching Timesheets")
 	resp, err = c.Get(config.JiraURL + "/rest/tempo-timesheets/4/timesheet-approval/approval-statuses?" + url.Values{"userKey": {userID}, "numberOfPeriods": {config.NumberOfPeriods}}.Encode())
